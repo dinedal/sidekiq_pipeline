@@ -36,7 +36,7 @@ SidekiqPipeline.execute(tasks)
 # WorkerTwo will output: 'bar'
 ```
 
-Tasks will be run in the order they are defined. If a task fails, it will retry on the step it failed on, and it will continue down the pipeline if/when it retires successfully.
+Tasks will be run in the order they are defined. If a task fails, it will retry on the step it failed on, and it will continue down the pipeline if/when it retires successfully. Each worker can have it's own queue or share queues. Tries to be as unobtrusive as possible
 
 ## Installation
 
