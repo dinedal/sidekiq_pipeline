@@ -1,6 +1,42 @@
 # SidekiqPipeline
 
-TODO: Write a gem description
+Allows you to define pipelines in Sidekiq, an ordered chain of jobs.
+
+```ruby
+class WorkerOne
+  include Sidekiq::Worker
+  include SidekiqPipeline
+
+  def pipeline_perform(params)
+    puts params["key"]
+  end
+end
+
+class WorkerTwo
+  include Sidekiq::Worker
+  include SidekiqPipeline
+
+  def pipeline_perform(params)
+    puts params["data"]
+  end
+end
+
+tasks = {
+  pipeline: [{
+    class: "WorkerOne",
+    params: {key: 'foo'}
+  },{
+    class: "WorkerTwo",
+    params: {data: 'bar'}
+  }]
+}
+
+SidekiqPipeline.execute(tasks)
+# WorkerOne will output: 'foo'
+# WorkerTwo will output: 'bar'
+```
+
+Tasks will be run in the order they are defined. If a task fails, it will retry on the step it failed on, and it will continue down the pipeline if/when it retires successfully.
 
 ## Installation
 
@@ -15,10 +51,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install sidekiq_pipeline
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Contributing
 
