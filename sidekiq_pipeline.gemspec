@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest", "~> 4.4.0"
   spec.add_development_dependency "turn", "~> 0.9.6"
 
-  spec.add_dependency "sidekiq", "~> 2.7.5"
+  spec.add_dependency "sidekiq"
 end
